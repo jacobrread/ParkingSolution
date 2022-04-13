@@ -4,6 +4,11 @@ import './utils/firebase';
 
 
 function Home() {
+
+  
+
+
+
   return (
     <div className="Home">
       <div className="topnav">
@@ -21,10 +26,20 @@ function Home() {
         <h1 className="header-text">Welcome (Insert Uername Here)</h1>
         <div className="spacing" />
       </div>
-      <div>
-        <button className="send-message">Send Message</button>
-        <button className="register-car">Register Car</button>
+      <div className='center'>
+        <div className='center'>
+        <h1>Message A Car</h1>
+        <div>Permit ID</div>
+        <input type="number" placeholder="Enter Permit ID" />
+        <div>Message</div>
+        <textarea type="text" className="glowing-border input" placeholder="Message..."/> 
+        <div>
+        <button className="">Send</button>
+        <button>Clear</button>
+        </div>
       </div>
+      </div>
+
     </div>
   );
 }
