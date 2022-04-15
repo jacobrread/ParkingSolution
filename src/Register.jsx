@@ -1,15 +1,8 @@
-import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router';
-import { AuthContext } from '../../utils/auth_context';
-import { ApiContext } from '../../utils/api_context';
-import { Paper } from '../common/paper';
-import { Input } from '../common/input';
-import { Button } from '../common/button';
+import { useState } from 'react';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 
-export const SignUp = () => {
-  const [, setAuthToken] = useContext(AuthContext);
-  const api = useContext(ApiContext);
-  const navigate = useNavigate();
+
+export const Register = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -44,20 +37,28 @@ export const SignUp = () => {
       return;
     }
 
-    const { token } = await api.post('/users', {
-      firstName,
-      lastName,
-      email,
-      password,
-    });
-    setAuthToken(token);
-    navigate('/');
+    const auth = getAuth();
+    const user = createUserWithEmailAndPassword(auth, email, password)
+    console.log(user);
   };
 
   return (
     <div className="flex flex-row justify-center m-4">
       <div className="w-96">
-        <Paper>
+        <div className='page'>
+          <div>First Name</div>
+          <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+          <div>Last Name</div>
+          <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+          <div>Email</div>
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <div>Confirm Email</div>
+          <input type="email" value={emailConfirmation} onChange={(e) => setEmailConfirmation(e.target.value)} />
+          <div>Password</div>
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <div>Confirm Password</div>
+        </div>
+        {/* <Paper>
           <div>First Name</div>
           <Input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
           <div>Last Name</div>
@@ -80,7 +81,7 @@ export const SignUp = () => {
             </Button>
           </div>
           <div className="flex">{errorMessage}</div>
-        </Paper>
+        </Paper> */}
       </div>
     </div>
   );

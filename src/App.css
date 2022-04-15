@@ -18,7 +18,18 @@
   font-size: 20px;
 }
 
-/* Dropdown Button */
+.logout-button {
+  background-color: inherit;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.logout-button:hover {
+  background-color: #aaaeb0;
+}
+
 .dropbtn {
   background-color: inherit;
   color: white;
@@ -59,7 +70,45 @@
 .dropdown:hover .dropdown-content {display: block;}
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {background-color: #8A8D8F;}
+.dropdown:hover .dropbtn {background-color: #aaaeb0;}
+
+.centered {
+  height: 100vh; /* Magic here */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+
+.center {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+.comments {
+  overflow:hidden;
+}
+
+.glowing-border {
+  border: 2px solid #dadada;
+  border-radius: 7px;
+}
+
+.input[type=text] {
+  width: 300px;
+  size: 10px;
+  padding: 5px;
+  overflow-y: scroll;
+}
 
 /* 
 *
@@ -138,8 +187,7 @@ Login page
   -webkit-box-direction: normal;
           flex-direction: row;
 }
-
-.register {
+.login-form .action button {
   width: 100%;
   border: none;
   padding: 18px;
@@ -154,77 +202,16 @@ Login page
   outline: 0;
   -webkit-transition: all .3s;
   transition: all .3s;
-  text-align: center;
 }
-
-.register:hover {
+.login-form .action button:hover {
   background: #d8d8d8;
 }
-
-.signin{
-  width: 100%;
-  border: none;
-  padding: 18px;
-  font-family: 'Rubik', sans-serif;
-  cursor: pointer;
-  text-transform: uppercase;
+.login-form .action button:nth-child(2) {
   background: #00263A;
   color: #fff;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 4px;
-  letter-spacing: 0.2px;
-  outline: 0;
-  -webkit-transition: all .3s;
-  transition: all .3s;
-  text-align: center;
 }
-
-.signin:hover {
+.login-form .action button:nth-child(2):hover {
   background: #3c4d6d;
-}
-
-/* Removes the line and color change from the links */
-a:link { text-decoration: none; }
-a:visited { text-decoration: none; }
-a:hover { text-decoration: none; }
-a:active { text-decoration: none; }
-
-
-
-.centered {
-  height: 100vh; /* Magic here */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.vertical-center {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-}
-
-
-.center {
-  margin: auto;
-  width: 50%;
-  padding: 10px;
-}
-
-.comments {
-  overflow:hidden;
-}
-
-.glowing-border {
-  border: 2px solid #dadada;
-  border-radius: 7px;
-}
-
-.input[type=text] {
-  width: 300px;
-  size: 10px;
-  padding: 5px;
-  overflow-y: scroll;
 }
