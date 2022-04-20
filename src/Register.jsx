@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { Paper } from './common/paper';
+import { Button } from './common/button';
+import { Input } from './common/input'
 
 
-export const Register = () => {
+export default function Register() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -10,6 +13,8 @@ export const Register = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [permitId, setPermitId] = useState('');
 
   const signUp = async () => {
     if (email === '') {
@@ -39,50 +44,84 @@ export const Register = () => {
 
     const auth = getAuth();
     const user = createUserWithEmailAndPassword(auth, email, password)
+      .then(registeredUser => {
+        this.firestore.collection("usersCollection")
+        .add({
+          id: permitId,
+          phone: phoneNumber,
+        })
+      });
     console.log(user);
-  };
 
+    // this.auth.createUserWithEmailAndPassword(email, password)
+    // .then(registeredUser => {
+    //   this.firestore.collection("usersCollection")
+    //   .add({
+    //     uid: registeredUser.user.uid,
+    //     field: 'Info you want to get here',
+    //     anotherField: 'Another Info...',
+    //   })
+    // }
+  };
+  
   return (
-    <div className="flex flex-row justify-center m-4">
-      <div className="w-96">
-        <div className='page'>
-          <div>First Name</div>
-          <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-          <div>Last Name</div>
-          <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-          <div>Email</div>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          <div>Confirm Email</div>
-          <input type="email" value={emailConfirmation} onChange={(e) => setEmailConfirmation(e.target.value)} />
-          <div>Password</div>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          <div>Confirm Password</div>
+    <div className="card">
+      <Paper>
+        <div>First Name</div>
+        <Input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+        <div>Last Name</div>
+        <Input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+        <div>Email</div>
+        <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <div>Confirm Email</div>
+        <Input type="email" value={emailConfirmation} onChange={(e) => setEmailConfirmation(e.target.value)} />
+        <div>Password</div>
+        <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <div>Confirm Password</div>
+        <Input
+          type="password"
+          value={passwordConfirmation}
+          onChange={(e) => setPasswordConfirmation(e.target.value)}
+        />
+        <div>Phone Number</div>
+        <Input type="text" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+        <div>Permit ID</div>
+        <Input type="text" value={permitId} onChange={(e) => setPermitId(e.target.value)} />
+
+        <div className='action'>
+          <button type="button" onClick={signUp}>
+            Sign up
+          </button>
         </div>
-        {/* <Paper>
-          <div>First Name</div>
-          <Input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-          <div>Last Name</div>
-          <Input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-          <div>Email</div>
-          <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          <div>Confirm Email</div>
-          <Input type="email" value={emailConfirmation} onChange={(e) => setEmailConfirmation(e.target.value)} />
-          <div>Password</div>
-          <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          <div>Confirm Password</div>
-          <Input
-            type="password"
-            value={passwordConfirmation}
-            onChange={(e) => setPasswordConfirmation(e.target.value)}
-          />
-          <div className="flex flex-row justify-end mt-2">
-            <Button type="button" onClick={signUp}>
-              Sign up
-            </Button>
-          </div>
-          <div className="flex">{errorMessage}</div>
-        </Paper> */}
-      </div>
+        <div className="flex">{errorMessage}</div>
+      </Paper>
     </div>
+
+    // <div className="login-form">
+    //   <form>
+    //     <h3>First Name</h3>
+    //     <div class="input-field">
+    //       <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+    //     </div>
+    //     <h3>Last Name</h3>
+    //     <div class="input-field">
+    //       <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+    //     </div>
+    //     <h3>Email</h3>
+    //     <div class="input-field">
+    //       <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+    //     </div>
+    //     <h3>Confirm Email</h3>
+    //     <div class="input-field">
+    //       <input type="email" value={emailConfirmation} onChange={(e) => setEmailConfirmation(e.target.value)} />
+    //     </div>
+    //     <h3>Password</h3>
+    //     <div class="input-field">
+    //       <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+    //     </div>
+    //     <h3>Confirm Password</h3>
+    //     <button onClick={signUp}>Sign Up</button>
+    //   </form>
+    // </div>
   );
 };

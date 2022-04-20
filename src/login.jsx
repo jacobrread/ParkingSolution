@@ -23,12 +23,7 @@ export default function Login() {
   }
 
   const register = () => {
-    navigate('/');
-  }
-
-  const logout = () => {
-    const auth = getAuth();
-    signOut(auth);
+    navigate('/register');
   }
 
   return (
@@ -47,7 +42,8 @@ export default function Login() {
           <button type="button" onClick={register}>Register</button>
           <button type="button" onClick={signIn}>Sign in</button>
         </div>
-          <p>{errorMessage}</p>
+
+        <p>{errorMessage}</p>
        
       </form>
     </div>

@@ -7,6 +7,8 @@ import { getAuth, onAuthStateChanged ,signOut } from 'firebase/auth';
 
 function Home() {
   const [user, setUser] = useState('');
+  const [message, setMessage] = useState('');
+  const [permit, setPermit] = useState('');
 
   useEffect(() => {
     const auth = getAuth();
@@ -28,17 +30,19 @@ function Home() {
     navigate('login');
   }
 
+  const clear = () => {
+    setMessage('');
+    setPermit('');
+  }
+
+  const send = () => {
+    //send text message
+  }
+
   return (
     <div className="Home">
       <div className="topnav">
         <div className="dropdown">
-          <button className="dropbtn">Menu</button>
-          <div className="dropdown-content">
-            <Link to="/">My Account</Link>
-            <Link to="/">Get Qr Code</Link>
-            <Link to="/">Help</Link>
-            <Link to="login">Login</Link>
-          </div>
         </div>
         <h1 className="header-text">Welcome { user && user.email }</h1>
         <button onClick={logout} className="logout-button">Logout</button>
@@ -46,13 +50,13 @@ function Home() {
       <div className='center'>
         <div className='center'>
         <h1>Message A Car</h1>
-        <div>Permit ID</div>
-        <input type="number" placeholder="Enter Permit ID" />
+        <div >Permit ID</div>
+        <input className='glowing-border input' type="number" placeholder="Enter Permit ID" value={permit} onChange={(event) =>{setPermit(event.target.value)}}/>
         <div>Message</div>
-        <textarea type="text" className="glowing-border input" placeholder="Message..."/> 
+        <textarea type="text" className="glowing-border input" placeholder="Message..." value={message} onChange={(event) =>{setMessage(event.target.value)}}/> 
         <div>
         <button className="">Send</button>
-        <button>Clear</button>
+        <button onClick={clear}>Clear</button>
         </div>
       </div>
       </div>
