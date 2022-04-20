@@ -44,10 +44,8 @@ export default function Login() {
           </div>
         </div>
         <div className="action">
-          <button onClick={register}>Register</button>
-          <button onClick={signIn}>Sign in</button>
-          <button onClick={logout}>Logout</button>
-
+          <button type="button" onClick={register}>Register</button>
+          <button type="button" onClick={signIn}>Sign in</button>
         </div>
           <p>{errorMessage}</p>
        

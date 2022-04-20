@@ -1,5 +1,5 @@
 import './App.css';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavigationType, useNavigate } from "react-router-dom";
 import './utils/firebase';
 import { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged ,signOut } from 'firebase/auth';
@@ -11,7 +11,12 @@ function Home() {
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
-     setUser(user)
+    
+     if (!user) {
+       navigate('/login');
+     } else {
+      setUser(user)
+     }
     });
   }, []);
 
@@ -35,7 +40,7 @@ function Home() {
             <Link to="login">Login</Link>
           </div>
         </div>
-        <h1 className="header-text">Welcome { user }</h1>
+        <h1 className="header-text">Welcome { user && user.email }</h1>
         <button onClick={logout} className="logout-button">Logout</button>
       </div>
       <div className='center'>
@@ -57,3 +62,12 @@ function Home() {
 }
 
 export default Home;
+
+
+// For sending Text Messages
+
+// hit the endpoint on frontend to use use Firebase functions
+// use firebase functions to interact with twillio
+// if we want we can then use twillio to send messages back to the sender by doing the reverse order
+
+// cs 5250 and cs 52605
