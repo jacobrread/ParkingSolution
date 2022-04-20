@@ -3,7 +3,8 @@ import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { Paper } from './common/paper';
 import { Button } from './common/button';
 import { Input } from './common/input'
-
+import { useNavigate } from "react-router-dom";
+import app from './utils/firebase';
 
 export default function Register() {
   const [firstName, setFirstName] = useState('');
@@ -15,6 +16,7 @@ export default function Register() {
   const [errorMessage, setErrorMessage] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [permitId, setPermitId] = useState('');
+  const navigate = useNavigate();
 
   const signUp = async () => {
     if (email === '') {
@@ -42,16 +44,28 @@ export default function Register() {
       return;
     }
 
-    const auth = getAuth();
-    const user = createUserWithEmailAndPassword(auth, email, password)
-      .then(registeredUser => {
-        this.firestore.collection("usersCollection")
-        .add({
-          id: permitId,
-          phone: phoneNumber,
-        })
-      });
-    console.log(user);
+    try {
+      const auth = getAuth();
+      await createUserWithEmailAndPassword(auth,email, password);
+      //need to find way to get firestore db and how to add to an collection.
+      setTimeout(() => {
+        navigate('/');
+      }, 1500);
+
+    } catch (error) {
+      console.log(error);
+    }
+
+    // const auth = getAuth();
+    // const user = createUserWithEmailAndPassword(auth, email, password)
+    //   .then(registeredUser => {
+    //     this.firestore.collection("usersCollection")
+    //     .add({
+    //       id: permitId,
+    //       phone: phoneNumber,
+    //     })
+    //   });
+    // console.log(user);
 
     // this.auth.createUserWithEmailAndPassword(email, password)
     // .then(registeredUser => {
