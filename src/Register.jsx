@@ -4,7 +4,7 @@ import { Paper } from './common/paper';
 import { Button } from './common/button';
 import { Input } from './common/input'
 import { useNavigate } from "react-router-dom";
-import app from './utils/firebase';
+import { db } from './utils/firebase';
 
 export default function Register() {
   const [firstName, setFirstName] = useState('');
@@ -47,7 +47,12 @@ export default function Register() {
     try {
       const auth = getAuth();
       await createUserWithEmailAndPassword(auth,email, password);
-      //need to find way to get firestore db and how to add to an collection.
+      await db.collection('usersCollection').add({
+        id: permitId,
+        phone: phoneNumber,
+      });
+      console.log('user created');
+
       setTimeout(() => {
         navigate('/');
       }, 1500);
