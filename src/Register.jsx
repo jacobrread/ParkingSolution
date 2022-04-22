@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { Paper } from './common/paper';
-import { Button } from './common/button';
 import { Input } from './common/input'
 import { useNavigate } from "react-router-dom";
 import { db } from './utils/firebase';
@@ -44,14 +43,20 @@ export default function Register() {
       return;
     }
 
+    // TODO: give user a warning that password must be a certain length
+
     try {
       const auth = getAuth();
-      await createUserWithEmailAndPassword(auth,email, password);
-      await db.collection('usersCollection').add({
+      await createUserWithEmailAndPassword(auth, email, password);
+      const doc = await db.collection('usersCollection').add({
+        
         id: permitId,
         phone: phoneNumber,
+        auth: auth.currentUser.uid,
       });
-      console.log('user created');
+      console.log("original: " + doc.id);
+      doc.set = auth.currentUser.uid;
+      console.log("new" + doc.id);
 
       setTimeout(() => {
         navigate('/');
@@ -60,27 +65,6 @@ export default function Register() {
     } catch (error) {
       console.log(error);
     }
-
-    // const auth = getAuth();
-    // const user = createUserWithEmailAndPassword(auth, email, password)
-    //   .then(registeredUser => {
-    //     this.firestore.collection("usersCollection")
-    //     .add({
-    //       id: permitId,
-    //       phone: phoneNumber,
-    //     })
-    //   });
-    // console.log(user);
-
-    // this.auth.createUserWithEmailAndPassword(email, password)
-    // .then(registeredUser => {
-    //   this.firestore.collection("usersCollection")
-    //   .add({
-    //     uid: registeredUser.user.uid,
-    //     field: 'Info you want to get here',
-    //     anotherField: 'Another Info...',
-    //   })
-    // }
   };
   
   return (
@@ -115,32 +99,5 @@ export default function Register() {
         <div className="flex">{errorMessage}</div>
       </Paper>
     </div>
-
-    // <div className="login-form">
-    //   <form>
-    //     <h3>First Name</h3>
-    //     <div class="input-field">
-    //       <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
-    //     </div>
-    //     <h3>Last Name</h3>
-    //     <div class="input-field">
-    //       <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
-    //     </div>
-    //     <h3>Email</h3>
-    //     <div class="input-field">
-    //       <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-    //     </div>
-    //     <h3>Confirm Email</h3>
-    //     <div class="input-field">
-    //       <input type="email" value={emailConfirmation} onChange={(e) => setEmailConfirmation(e.target.value)} />
-    //     </div>
-    //     <h3>Password</h3>
-    //     <div class="input-field">
-    //       <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-    //     </div>
-    //     <h3>Confirm Password</h3>
-    //     <button onClick={signUp}>Sign Up</button>
-    //   </form>
-    // </div>
   );
 };

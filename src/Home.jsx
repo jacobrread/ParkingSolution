@@ -1,14 +1,17 @@
 import './App.css';
-import { Link, NavigationType, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import './utils/firebase';
 import { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged ,signOut } from 'firebase/auth';
+import {db} from './utils/firebase';
 
 
-function Home() {
+export default function Home() {
   const [user, setUser] = useState('');
   const [message, setMessage] = useState('');
   const [permit, setPermit] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [warningMessage, setWarningMessage] = useState('');
 
   useEffect(() => {
     const auth = getAuth();
@@ -34,9 +37,38 @@ function Home() {
     setMessage('');
     setPermit('');
   }
+  
 
-  const send = () => {
-    //send text message
+  async function send() {
+    try {
+      await db.collection('Messages').add({
+        to: '+1' + phoneNumber,
+        body: message,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    clear();
+  };
+
+
+  const getPhoneForPermit = async () => {
+      db.collection("usersCollection")
+    .get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+            if(doc.data().id == permit){
+              setPhoneNumber(doc.data().phone);
+              send();
+              setWarningMessage('Message sent!');
+            }
+        });
+
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    });
+    setWarningMessage("Could not find phone for permit. Enter a valid permit number.");
   }
 
   return (
@@ -55,23 +87,13 @@ function Home() {
         <div>Message</div>
         <textarea type="text" className="glowing-border input" placeholder="Message..." value={message} onChange={(event) =>{setMessage(event.target.value)}}/> 
         <div>
-        <button className="">Send</button>
-        <button onClick={clear}>Clear</button>
+          <button onClick={getPhoneForPermit}>Send</button>
+          <button onClick={clear}>Clear</button>
         </div>
+        <div>{warningMessage}</div>
       </div>
       </div>
 
     </div>
   );
 }
-
-export default Home;
-
-
-// For sending Text Messages
-
-// hit the endpoint on frontend to use use Firebase functions
-// use firebase functions to interact with twillio
-// if we want we can then use twillio to send messages back to the sender by doing the reverse order
-
-// cs 5250 and cs 52605

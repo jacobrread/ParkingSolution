@@ -27,25 +27,29 @@ export default function Login() {
   }
 
   return (
-    <div className="login-form">
-      <form>
-        <h1>Login</h1>
-        <div className="content">
-          <div className="input-field">
-            <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+    <div>
+      <div className="login-form">
+        <form>
+          <h1>Login</h1>
+          <div className="content">
+            <div className="input-field">
+              <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+            </div>
+            <div className="input-field">
+              <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            </div>
           </div>
-          <div className="input-field">
-            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <div className="action">
+            <button type="button" onClick={register}>Register</button>
+            <button type="button" onClick={signIn}>Sign in</button>
           </div>
-        </div>
-        <div className="action">
-          <button type="button" onClick={register}>Register</button>
-          <button type="button" onClick={signIn}>Sign in</button>
-        </div>
 
-        <p>{errorMessage}</p>
-       
-      </form>
+          <p>{errorMessage}</p>
+        </form>
+      </div>
+      <div className="login-form">
+        <button type="button" onClick={navigate('/message')}>Send message</button>
+      </div>
     </div>
   );
 }
