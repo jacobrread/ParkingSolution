@@ -6,18 +6,19 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import Home from './Home';
-import Login from './login';
+import Update from './Update';
+import Login from './Login';
 import Register from './Register';
+import SendMessage from './SendMessage';
 
-//https://www.twilio.com/docs/labs/firebase-extensions/send-messages-with-twilio
 const rootElement = document.getElementById("root");
 render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Update />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/sendmessage" element={<SendMessage />} />
     </Routes>
   </BrowserRouter>,
   rootElement

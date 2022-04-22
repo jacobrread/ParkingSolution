@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import './utils/firebase';
 
 export default function Login() {
@@ -12,10 +12,8 @@ export default function Login() {
   const signIn = () => {
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password).then(() => {
-      console.log('signed in');
       navigate('/');
     }).catch((error) => {
-      console.log("error was caught");
       setErrorMessage("There was a problem logging in. Please try again.");
     });
 
