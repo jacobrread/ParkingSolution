@@ -24,26 +24,37 @@ export default function Login() {
     navigate('/register');
   }
 
-  return (
-    <div className="login-form">
-      <form>
-        <h1>Login</h1>
-        <div className="content">
-          <div className="input-field">
-            <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-          </div>
-          <div className="input-field">
-            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          </div>
-        </div>
-        <div className="action">
-          <button type="button" onClick={register}>Register</button>
-          <button type="button" onClick={signIn}>Sign in</button>
-        </div>
+  const sendMessage = () => {
+    navigate('/sendMessage');
+  }
 
-        <p>{errorMessage}</p>
-       
-      </form>
+  return (
+    <div>
+      <div className="login-form">
+        <form>
+          <h1>Login</h1>
+          <div className="content">
+            <div className="input-field">
+              <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+            </div>
+            <div className="input-field">
+              <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            </div>
+          </div>
+          <div className="action">
+            <button type="button" onClick={register}>Register</button>
+            <button type="button" onClick={signIn}>Sign in</button>
+          </div>
+
+          <p>{errorMessage}</p>
+        
+        </form>
+      </div>
+      <div className='login-form'>
+        <div className='action'>
+          <button onClick={sendMessage}>Send Message</button>
+        </div>
+      </div>
     </div>
   );
 }
