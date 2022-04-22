@@ -30,7 +30,7 @@ export default function Home() {
   const logout = () => {
     const auth = getAuth();
     signOut(auth);
-    navigate('login');
+    navigate('/login');
   }
 
   const clear = () => {
@@ -39,10 +39,10 @@ export default function Home() {
   }
   
 
-  async function send() {
+  async function send(number) {
     try {
       await db.collection('Messages').add({
-        to: '+1' + phoneNumber,
+        to: '+1' + number,
         body: message,
       });
     } catch (error) {
@@ -59,7 +59,7 @@ export default function Home() {
         querySnapshot.forEach(function(doc) {
             if(doc.data().id == permit){
               setPhoneNumber(doc.data().phone);
-              send();
+              send(doc.data().phone);
               setWarningMessage('Message sent!');
             }
         });
@@ -71,11 +71,14 @@ export default function Home() {
     setWarningMessage("Could not find phone for permit. Enter a valid permit number.");
   }
 
+  const updateInfo = async () => {
+    navigate('/update');
+  }
+
   return (
     <div className="Home">
       <div className="topnav">
-        <div className="dropdown">
-        </div>
+        <button onClick={updateInfo} className='logout-button'>Update Infomation</button>
         <h1 className="header-text">Welcome { user && user.email }</h1>
         <button onClick={logout} className="logout-button">Logout</button>
       </div>

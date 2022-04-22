@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { getAuth, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import './utils/firebase';
 
 export default function Login() {
@@ -46,9 +46,6 @@ export default function Login() {
 
           <p>{errorMessage}</p>
         </form>
-      </div>
-      <div className="login-form">
-        <button type="button" onClick={navigate('/message')}>Send message</button>
       </div>
     </div>
   );

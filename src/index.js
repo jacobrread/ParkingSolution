@@ -9,6 +9,7 @@ import {
 import Home from './Home';
 import Login from './login';
 import Register from './Register';
+import Update from './Update';
 
 //https://www.twilio.com/docs/labs/firebase-extensions/send-messages-with-twilio
 const rootElement = document.getElementById("root");
@@ -18,6 +19,7 @@ render(
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/update" element={<Update />} />
     </Routes>
   </BrowserRouter>,
   rootElement
