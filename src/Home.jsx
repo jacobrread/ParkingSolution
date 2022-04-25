@@ -78,7 +78,7 @@ export default function Home() {
   return (
     <div className="Home">
       <div className="topnav">
-        <button onClick={updateInfo} className='logout-button'>Update Infomation</button>
+        <button onClick={updateInfo} className='logout-button'>Update Profile</button>
         <h1 className="header-text">Welcome { user && user.email }</h1>
         <button onClick={logout} className="logout-button">Logout</button>
       </div>
